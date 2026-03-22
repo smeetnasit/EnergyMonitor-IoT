@@ -1,6 +1,7 @@
 ﻿using EnergyMonitor.API;
 using EnergyMonitor.API.Interface;
 using EnergyMonitor.API.Repository;
+using EnergyMonitor.API.Services;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -21,6 +22,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddSingleton<DBContext>();
 builder.Services.AddSingleton<IEnergyRepository, EnergyRepository>();
+builder.Services.AddSingleton<AnomalyDetectionService>();
+builder.Services.AddHostedService<MqttSubscriberService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
