@@ -14,6 +14,14 @@ namespace EnergyMonitor.API.Repository
             _dbContext = dbContext;
         }
 
+        public async Task<UserDTO?> GetUserByEmail(string email)
+        {
+            using var connection = _dbContext.CreateConnection();
+            return await connection.QueryFirstOrDefaultAsync<UserDTO>(
+                "SELECT * FROM Users WHERE Email = @Email AND IsActive = 1",
+                new { Email = email });
+        }
+
         // ─── FACTORIES ───────────────────────────────────────
         public async Task<List<FactoryDTO>> GetAllFactories()
         {

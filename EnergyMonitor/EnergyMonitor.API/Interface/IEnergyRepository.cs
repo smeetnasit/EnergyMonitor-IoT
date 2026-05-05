@@ -25,5 +25,6 @@ namespace EnergyMonitor.API.Interface
 
         // Cost Config
         Task<EnergyCostConfigDTO?> GetCostConfig(int factoryId);
+        Task<UserDTO?> GetUserByEmail(string email);
     }
 }
