@@ -26,7 +26,7 @@ namespace EnergyMonitor.MVC.Controllers
             string email, string password)
         {
             var result = await _apiHelper.PostAsync<Dictionary<string, object>>(
-                "/api/auth/login",
+                "/api/Auth/login",
                 new { email, password });
 
             if (result == null)
