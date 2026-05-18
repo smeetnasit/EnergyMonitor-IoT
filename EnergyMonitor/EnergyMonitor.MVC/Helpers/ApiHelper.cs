@@ -7,6 +7,7 @@ namespace EnergyMonitor.MVC.Helpers
     {
         private readonly string _baseUrl;
         private readonly ILogger<ApiHelper> _logger;
+        private readonly IConfiguration _configuration;
 
         public ApiHelper(
             IConfiguration configuration,
@@ -14,6 +15,11 @@ namespace EnergyMonitor.MVC.Helpers
         {
             _baseUrl = configuration["ApiSettings:BaseUrl"]!;
             _logger = logger;
+            _configuration = configuration;
+
+            // Set base address from configuration
+            var apiBaseUrl = _configuration["ApiSettings:BaseUrl"] ?? "https://localhost:5000";
+            _httpClient.BaseAddress = new Uri(apiBaseUrl);
         }
 
         // GET request
@@ -33,15 +39,15 @@ namespace EnergyMonitor.MVC.Helpers
 
                 var content = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<T>(content);
-            }
+                }
             catch (Exception ex)
-            {
+                {
                 _logger.LogError(
                     "GET {Endpoint} failed: {Error}",
                     endpoint, ex.Message);
-                return default;
+                    return default;
+                }
             }
-        }
 
         // POST request
         public async Task<T?> PostAsync<T>(
