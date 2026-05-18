@@ -1,7 +1,12 @@
+using EnergyMonitor.MVC.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Register HttpClient and ApiHelper
+builder.Services.AddHttpClient<IApiHelper, ApiHelper>();
 
 var app = builder.Build();
 
